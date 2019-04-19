@@ -1,3 +1,5 @@
 [user]
 	name = icalvin102
 	email = calvin@icalvin.de
+[core]
+	editor = vim
