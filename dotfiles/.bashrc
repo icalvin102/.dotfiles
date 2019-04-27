@@ -11,7 +11,7 @@ M="\[\e[35m\]"          # Magenta
 C="\[\e[36m\]"          # Cyan
 W="\[\e[37m\]"          # White
 
-export PS1="${LIGHT}${W}[${R}\u${Y}@${G}\h${W}:${B}\w${W}]${B}\$ ${W}"
+export PS1="${R}[${Y}\u${G}@${B}\h ${M}\w${R}]${W}\$ ${W}"
 
 # enable color support
 
