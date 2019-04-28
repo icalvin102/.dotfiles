@@ -2,14 +2,14 @@
 
 DARK="\[\e[0m\]"
 LIGHT="\[\e[1m\]"
-K="\[\e[30m\]"          # blaK
-R="\[\e[31m\]"          # Red
-G="\[\e[32m\]"          # Green
-Y="\[\e[33m\]"          # Yellow
-B="\[\e[34m\]"          # Blue
-M="\[\e[35m\]"          # Magenta
-C="\[\e[36m\]"          # Cyan
-W="\[\e[37m\]"          # White
+K="\[\e[90m\]"          # blaK
+R="\[\e[91m\]"          # Red
+G="\[\e[92m\]"          # Green
+Y="\[\e[93m\]"          # Yellow
+B="\[\e[94m\]"          # Blue
+M="\[\e[95m\]"          # Magenta
+C="\[\e[96m\]"          # Cyan
+W="\[\e[97m\]"          # White
 
 export PS1="${R}[${Y}\u${G}@${B}\h ${M}\w${R}]${W}\$ ${W}"
 
