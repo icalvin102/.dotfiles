@@ -4,10 +4,11 @@
 #author		:icalvin102
 
 backupdir=~/.dotfiles_backup/$(date +"%Y%m%d-%H%M%S")
+currentdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 mkdir -p $backupdir
 
-for filepath in ./dotfiles/.*; do
+for filepath in ${currentdir}/dotfiles/.*; do
     filename=$(basename "$filepath")
     if [ "$filename" != "." ] && [ "$filename" != ".." ] ; then
         echo "$filename"
