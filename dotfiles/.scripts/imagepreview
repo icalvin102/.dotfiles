@@ -1,0 +1,14 @@
+#!/bin/bash
+
+source "`ueberzug library`"
+echo $(pwd)
+echo $@
+
+echo "Columns ${FZF_PREVIEW_COLUMNS} ${COLUMNS}"
+
+ImageLayer 0< <(
+        ImageLayer::add [identifier]="previewImage" [x]="$2" [y]="$3" [width]="$4" [height]="$5" [path]="$1"
+        sleep 5 
+) 
+
+echo ende

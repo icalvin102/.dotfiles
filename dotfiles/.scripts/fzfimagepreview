@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [[ "$1" =~ \.jpg$|\.png$ ]]; then
+source "`ueberzug library`"
+
+exiftool -FileName -Directory -ImageSize -BitsPerSample -FileSize $1 | echo
+
+s=$FZF_PREVIEW_COLUMNS
+
+ImageLayer 0< <(
+ ImageLayer::add [identifier]="previewImage" [x]="$(($s + 6))" [y]="8" [width]="$s" [height]="$s" [path]="$1"
+ sleep 10000d
+) 
+
+fi

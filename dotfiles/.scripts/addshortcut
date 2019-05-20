@@ -1,0 +1,23 @@
+#!/bin/sh
+
+
+sh_command=$(dmenu_path | dmenu -p "Select command")
+seperator=""
+
+while : ; do
+        key=$(echo -e "Confirm!\nsuper\nhyper\nmeta\nalt\ncontrol\nctrl\nshift\nmode_switch\nlock\mod1\nmod2\nmod3\nmod4\nmod5\nany" | dmenu -p "Shortcut: $shortcut")
+        [ "$key" == "Confirm!" ] && break
+        [ -z "$key" ] && break
+        shortcut="${shortcut}${seperator}${key}"
+        seperator=" + "
+done
+
+comment=$(echo "" | dmenu -p "Type comment: ")
+
+echo -e "\n" >> ~/.config/sxhkd/sxhkdrc
+[ -z "$comment" ] || echo "# $comment" >> ~/.config/sxhkd/sxhkdrc
+echo "$shortcut" >> ~/.config/sxhkd/sxhkdrc
+echo -e "\t$sh_command" >> ~/.config/sxhkd/sxhkdrc
+
+
+killall sxhkd && sxhkd &

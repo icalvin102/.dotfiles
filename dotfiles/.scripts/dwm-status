@@ -1,0 +1,17 @@
+#!/bin/bash
+
+get_date(){
+    echo "$(date +%Y.%m.%d\ %H:%M)"
+}
+
+get_volume(){
+    echo "Vol $(pamixer --get-volume)%"
+}
+
+s+="$(date +%H:%M)"
+
+while true 
+do
+    xsetroot -name " [ $(get_volume) ][ $(get_date) ] "
+    sleep 2
+done

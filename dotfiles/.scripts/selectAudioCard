@@ -1,0 +1,8 @@
+#!/bin/bash
+
+card=$(aplay -l | awk -F \:\  '/,/{print $2}' | awk -F , '{print $1}' | uniq | dmenu -i -p "Select audiocard: " | awk '{print $1}')
+
+
+echo -e "pcm.!default {\n\ttype hw\n\tcard ${card}\n}\n" >  ~/.asoundrc
+echo -e "ctl.!default {\n\ttype hw\n\tcard ${card}\n}\n" >> ~/.asoundrc
+
