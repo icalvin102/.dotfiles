@@ -2,7 +2,10 @@
 
 
 sh_command=$(dmenu_path | dmenu -p "Select command")
+[ -z "$sh_command" ] && exit 1
+
 seperator=""
+
 
 while : ; do
         key=$(echo -e "Confirm!\nsuper\nhyper\nmeta\nalt\ncontrol\nctrl\nshift\nmode_switch\nlock\mod1\nmod2\nmod3\nmod4\nmod5\nany" | dmenu -p "Shortcut: $shortcut")
@@ -11,6 +14,8 @@ while : ; do
         shortcut="${shortcut}${seperator}${key}"
         seperator=" + "
 done
+
+[ -z "$shortcut" ] && exit 1
 
 comment=$(echo "" | dmenu -p "Type comment: ")
 

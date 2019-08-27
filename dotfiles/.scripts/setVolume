@@ -3,4 +3,4 @@
 defaultsink=$(pactl info | awk -F \:\  '/Default Sink/ {print $2}')
 
 volume=$(echo -e "10%\n20%\n30%\n40%\n50%\n60%\n70%\n80%\n90%\n" | dmenu -i -p "Set volume: ")
-pactl set-sink-volume $defaultsink $volume
+[ -z "$volume" ] || pactl set-sink-volume $defaultsink $volume
