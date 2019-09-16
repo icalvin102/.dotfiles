@@ -23,6 +23,6 @@ set -o vi
 
 # aliases
 
-alias vim='nvim'
+alias vi='nvim'
 alias restartpulseaudio='pulseaudio -k && pulseaudio --start'
 alias toclipboard='xclip -selection clipboard -i'
