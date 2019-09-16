@@ -5,6 +5,8 @@ set ruler
 
 syntax on
 
+let mapleader = " "
+
 filetype indent on
 set tabstop=8
 set expandtab
