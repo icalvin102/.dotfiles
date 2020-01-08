@@ -26,11 +26,25 @@ set listchars=tab:▸\ ,eol:¬
 " noremap k <NOP> 
 " noremap l <NOP>
 
+:tnoremap <A-h> <C-\><C-N><C-w>h
+:tnoremap <A-j> <C-\><C-N><C-w>j
+:tnoremap <A-k> <C-\><C-N><C-w>k
+:tnoremap <A-l> <C-\><C-N><C-w>l
+:inoremap <A-h> <C-\><C-N><C-w>h
+:inoremap <A-j> <C-\><C-N><C-w>j
+:inoremap <A-k> <C-\><C-N><C-w>k
+:inoremap <A-l> <C-\><C-N><C-w>l
+:nnoremap <A-h> <C-w>h
+:nnoremap <A-j> <C-w>j
+:nnoremap <A-k> <C-w>k
+:nnoremap <A-l> <C-w>l
+
 call plug#begin('~/.local/share/nvim/plugged')
 
 " assuming you're using vim-plug: https://github.com/junegunn/vim-plug
 Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
+Plug 'kassio/neoterm'
 
 " enable ncm2 for all buffers
 autocmd BufEnter * call ncm2#enable_for_buffer()
@@ -44,7 +58,12 @@ Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-path'
 Plug 'ncm2/ncm2-pyclang'
 
+" Svelte syntaxhighlighting
+Plug 'evanleck/vim-svelte'
+
 call plug#end()
 
 let g:ncm2_pyclang#library_path = '/usr/lib/libclang.so'
 
+
+" Svelte
