@@ -12,17 +12,18 @@ for filepath in ${currentdir}/dotfiles/.*; do
     filename=$(basename "$filepath")
     if [ "$filename" != "." ] && [ "$filename" != ".." ] ; then
         echo "$filename"
-        if [ -f ~/$filename ] || [ -d ~/$filename ] && [ ! -L ~/$filename ] ; then
+        [ -L ~/$filename ] && echo 'already linked' && continue
+        if [ -f ~/$filename ] || [ -d ~/$filename ] ; then
             echo "backing up $filename"
             mv ~/$filename $backupdir/$filename
         fi
         echo "linking $(realpath $filepath) to ~/$filename"
         ln -sf $(realpath $filepath) ~/$filename
-        fi	      
-    done
+    fi	      
+done
 
-    echo "cleaning up"
-    rmdir --ignore-fail-on-non-empty $backupdir
-    rmdir --ignore-fail-on-non-empty ~/.dotfiles_backup
-    echo "finished"
+echo "cleaning up"
+rmdir --ignore-fail-on-non-empty $backupdir
+rmdir --ignore-fail-on-non-empty ~/.dotfiles_backup
+echo "finished"
 

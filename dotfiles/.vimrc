@@ -23,11 +23,6 @@ set listchars=tab:▸\ ,eol:¬
 
 set exrc
 
-" noremap h <NOP> 
-" noremap j <NOP> 
-" noremap k <NOP> 
-" noremap l <NOP>
-
 :nnoremap ZZ :xa<CR>
 
 " Window Navigation
