@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# List all yay packages in fzf and install selected packages
+
+packages=$(yay -Sl | cut -d' ' -f2 | fzf -m --preview='yay -Si {}') && yay -S $packages

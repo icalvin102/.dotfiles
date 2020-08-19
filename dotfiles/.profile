@@ -1,7 +1,7 @@
 #!/bin/sh
 
 export PATH="$HOME/.scripts:$HOME/.local/bin:$PATH"
-export EDITOR="vim"
+export EDITOR="nvim"
 export TERMINAL="st"
 export BROWSER="brave"
 
