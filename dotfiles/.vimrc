@@ -58,10 +58,9 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 Plug 'tpope/vim-fugitive'
-
 " vimwiki
 Plug 'vimwiki/vimwiki'
 Plug 'icalvin102/vimwiki-sync'
-let g:vimwiki_list = [{'syntax': 'markdown', 'ext': '.md'}]
+let g:vimwiki_list = [{'syntax': 'markdown', 'ext': 'md'}]
 
 call plug#end()

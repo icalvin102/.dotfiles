@@ -29,7 +29,6 @@ alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias tmux='tmux -2'
 
-
 set -o vi
 
 # aliases
@@ -43,3 +42,4 @@ alias bl='~/build/blender-git/build_linux/bin/blender'
 [ -f /usr/share/fzf/completion.bash ] && source /usr/share/fzf/completion.bash
 [ -f /usr/share/fzf/key-bindings.bash ] && source /usr/share/fzf/key-bindings.bash
 
+[ -f ~/.bashrc_local ] && source ~/.bashrc_local

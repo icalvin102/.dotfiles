@@ -1,5 +1,8 @@
 #!/bin/bash
 
+trap 'update' 5
+S='#'
+
 get_date(){
     echo "$(date +%Y.%m.%d\ %H:%M)"
 }
@@ -8,10 +11,24 @@ get_volume(){
     echo "Vol $(pamixer --get-volume)%"
 }
 
-s+="$(date +%H:%M)"
+get_battery(){
+    CAPACITY=$(cat /sys/class/power_supply/BAT0/capacity)
+    STATUS=$(sed 's/Not charging/~/;s/Charging/+/;s/Discharging/=/' /sys/class/power_supply/BAT0/status)
+    echo "Bat $STATUS $CAPACITY%"
+}
+
+get_wifi_ssid(){
+    echo "SSID: $(nmcli -t -f active,ssid dev wifi | grep -P -o '(?<=^yes:).+')"
+}
+
+update(){
+    xsetroot -name " $(get_volume) $S $(get_date) " &
+    wait
+}
 
 while true 
 do
-    xsetroot -name " [ $(get_volume) ][ $(get_date) ] "
-    sleep 2
+    update
+    sleep 30 &
+    wait
 done
