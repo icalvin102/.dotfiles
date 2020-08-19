@@ -13,6 +13,16 @@ W="\[\033[37m\]"          # White
 
 export PS1="${BOLD}${R}[${Y}\u${G}@${B}\h ${M}\w${R}]${W}\$ ${W}${RESET}"
 
+# .bash_history
+
+export HISTTIMEFORMAT="%F %T "
+export HISTSIZE=10000
+export HISTFILESIZE=100000000
+shopt -s histappend
+PROMPT_COMMAND='history -a'
+export HISTCONTROL=ignorespace
+shopt -s cmdhist
+
 # enable color support
 
 alias ls='ls --color=auto'
@@ -26,3 +36,9 @@ set -o vi
 alias vi='nvim'
 alias restartpulseaudio='pulseaudio -k && pulseaudio --start'
 alias toclipboard='xclip -selection clipboard -i'
+
+alias bl='~/build/blender-git/build_linux/bin/blender'
+
+[ -f /usr/share/fzf/completion.bash ] && source /usr/share/fzf/completion.bash
+[ -f /usr/share/fzf/key-bindings.bash ] && source /usr/share/fzf/key-bindings.bash
+

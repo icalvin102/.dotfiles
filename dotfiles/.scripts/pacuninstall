@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# List all explicitly installed packages in fzf and uninstall selected packages
+
+packages=$(pacman -Qe | cut -d' ' -f1 | fzf -m --preview='pacman -Qi {}') && sudo pacman -Rs $packages

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# List all pacman packages in fzf and install selected packages
+
+packages=$(pacman -Sl | cut -d' ' -f2 | fzf -m --preview='pacman -Si {}') && sudo pacman -S $packages

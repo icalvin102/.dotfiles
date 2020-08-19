@@ -3,6 +3,8 @@ set number
 set relativenumber
 set ruler
 
+filetype plugin on
+
 syntax on
 
 let mapleader = " "
@@ -21,10 +23,12 @@ set visualbell
 
 set listchars=tab:▸\ ,eol:¬
 
-" noremap h <NOP> 
-" noremap j <NOP> 
-" noremap k <NOP> 
-" noremap l <NOP>
+"nnoremap h <NOP> 
+"nnoremap j <NOP> 
+"nnoremap k <NOP> 
+"nnoremap l <NOP>
+
+:nnoremap ZZ :xa<CR>
 
 :tnoremap <A-h> <C-\><C-N><C-w>h
 :tnoremap <A-j> <C-\><C-N><C-w>j
@@ -42,28 +46,22 @@ set listchars=tab:▸\ ,eol:¬
 call plug#begin('~/.local/share/nvim/plugged')
 
 " assuming you're using vim-plug: https://github.com/junegunn/vim-plug
-Plug 'ncm2/ncm2'
+Plug 'morhetz/gruvbox'
+autocmd vimenter * colorscheme gruvbox
+
+Plug 'junegunn/fzf.vim'
 Plug 'roxma/nvim-yarp'
 Plug 'kassio/neoterm'
 
-" enable ncm2 for all buffers
-autocmd BufEnter * call ncm2#enable_for_buffer()
-
-" IMPORTANT: :help Ncm2PopupOpen for more information
-set completeopt=noinsert,menuone,noselect
-
-" NOTE: you need to install completion sources to get completions. Check
-" our wiki page for a list of sources: https://github.com/ncm2/ncm2/wiki
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-path'
-Plug 'ncm2/ncm2-pyclang'
-
-" Svelte syntaxhighlighting
 Plug 'evanleck/vim-svelte'
 
+Plug 'junegunn/vim-easy-align'
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" vimwiki
+Plug 'vimwiki/vimwiki'
+Plug 'michal-h21/vimwiki-sync'
+let g:vimwiki_list = [{'syntax': 'markdown', 'ext': '.md'}]
+
 call plug#end()
-
-let g:ncm2_pyclang#library_path = '/usr/lib/libclang.so'
-
-
-" Svelte
