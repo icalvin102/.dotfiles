@@ -1,5 +1,12 @@
 [user]
-	name = icalvin102
-	email = calvin@icalvin.de
+    name = icalvin102
+    email = calvin@icalvin.de
 [core]
-	editor = nvim
+    editor = nvim
+[diff]
+    tool = nvimdiff
+[merge]
+    tool = nvimdiff
+    conflictstyle = diff3
+[mergetool "nvimdiff"]
+    cmd = nvim -d $LOCAL $MERGED $REMOTE $BASE

@@ -23,12 +23,9 @@ set visualbell
 
 set listchars=tab:▸\ ,eol:¬
 
-"nnoremap h <NOP> 
-"nnoremap j <NOP> 
-"nnoremap k <NOP> 
-"nnoremap l <NOP>
-
 :nnoremap ZZ :xa<CR>
+
+" Window Navigation
 
 :tnoremap <A-h> <C-\><C-N><C-w>h
 :tnoremap <A-j> <C-\><C-N><C-w>j
@@ -49,19 +46,22 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'morhetz/gruvbox'
 autocmd vimenter * colorscheme gruvbox
 
-Plug 'junegunn/fzf.vim'
 Plug 'roxma/nvim-yarp'
-Plug 'kassio/neoterm'
+Plug 'mattn/emmet-vim'
+let g:user_emmet_leader_key=','
 
 Plug 'evanleck/vim-svelte'
 
-Plug 'junegunn/vim-easy-align'
-
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+Plug 'tpope/vim-fugitive'
 
 " vimwiki
 Plug 'vimwiki/vimwiki'
-Plug 'michal-h21/vimwiki-sync'
+Plug 'icalvin102/vimwiki-sync'
 let g:vimwiki_list = [{'syntax': 'markdown', 'ext': '.md'}]
 
 call plug#end()
