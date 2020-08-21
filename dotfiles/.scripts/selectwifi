@@ -1,9 +1,11 @@
 #!/bin/bash
 
+[ -t 0 ] && cmd='fzf' || cmd='dmenu'
+
 wifiname=$(sort \
     <(nmcli --fields name connection show | awk 'NR>1 {sub(/\s*$/,""); print}' | sort | uniq) \
     <(nmcli --fields ssid device wifi list | awk 'NR>1 {sub(/\s*$/,""); print}' | sort | uniq) \
-    | uniq -d | dmenu)
+    | uniq -d | $cmd )
 
 nmcli connection up id "$wifiname"
 
