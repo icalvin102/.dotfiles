@@ -56,6 +56,21 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+nnoremap <leader>a :Buffers<CR>
+
+
+" svelte-nerdfonts fzf completion
+function! s:join_lines(lines)
+  return join(a:lines, "\n") 
+endfunction
+
+let snf_sed = 'sed -e ''s/export/import/'' -e ''s/\.\//svelte-nerdfonts\/icons\//''' 
+let snf_path = '"$(git rev-parse --show-toplevel)/node_modules/svelte-nerdfonts/icons/index.js"'
+inoremap <expr> <c-x>i fzf#vim#complete({
+    \ 'source': snf_sed . ' ' . snf_path,
+    \ 'reducer': function('<sid>join_lines'),
+    \ 'options': '--multi'})
+
 
 Plug 'tpope/vim-fugitive'
 " vimwiki

@@ -8,7 +8,7 @@ get_date(){
 }
 
 get_volume(){
-    echo "Vol $(pamixer --get-volume)%"
+    echo "Vol $(pamixer --get-volume)% $(pamixer --get-mute | awk '/true/ { print "muted" }')"
 }
 
 get_battery(){
