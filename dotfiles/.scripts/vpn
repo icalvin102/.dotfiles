@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# usage
+# vpn <start|stop> <vpnname>
+
+action="$1"
+name="$2"
+[ $action == "start" ] && disable_ipv6=1 || disable_ipv6=0
+
+echo -e "Current IP: $(curl -s ifconfig.me)\n"
+
+sudo systemctl "$action" "openvpn-client@$name" \
+    && echo "$action $name : done"
+
+sudo sysctl -wq "net.ipv6.conf.all.disable_ipv6=$disable_ipv6" \
+    && echo "set disable_ipv6=${disable_ipv6} : done"
+
+echo -e "\nNew IP: $(curl -s ifconfig.me)"
