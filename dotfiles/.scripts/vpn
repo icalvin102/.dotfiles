@@ -5,14 +5,87 @@
 
 action="$1"
 name="$2"
-[ $action == "start" ] && disable_ipv6=1 || disable_ipv6=0
 
-echo -e "Current IP: $(curl -s ifconfig.me)\n"
+function showhelp {
+    echo '
+NAME
+    vpn
 
-sudo systemctl "$action" "openvpn-client@$name" \
-    && echo "$action $name : done"
+SYNOPSIS
+    vpn <install|start|stop|-h> <vpnname|zipfile>
 
-sudo sysctl -wq "net.ipv6.conf.all.disable_ipv6=$disable_ipv6" \
-    && echo "set disable_ipv6=${disable_ipv6} : done"
+EXAMPLES
+    Install/Import CyberGhostVPN OpenVPN connection from .zip file
+        vpn install cyberghostvpn.zip
 
-echo -e "\nNew IP: $(curl -s ifconfig.me)"
+    Start an installed VPN connection
+        vpn start vpnname
+
+    Stop a running VPN connection
+        vpn stop vpnname
+    '
+}
+
+function install {
+    [ ! -e "$name" ] && echo "'${name}' is not a file or directory" && exit 
+
+    tmp_dir="$(mktemp -d)"
+
+    unzip "$name" -d "$tmp_dir"
+    cd "$tmp_dir"
+
+    echo -n 'Name of VPN: '
+    read vpnname
+
+    echo -n 'Username: '
+    read username
+
+    echo -n 'Password: '
+    read password
+
+    mv {,"${vpnname}_"}ca.crt
+    mv {,"${vpnname}_"}client.crt
+    mv {,"${vpnname}_"}client.key
+
+    echo "$username" > "${vpnname}_pass.txt"
+    echo "$password" >> "${vpnname}_pass.txt"
+
+    awk -v vpnname="$vpnname" '
+        /auth-user-pass/ { print $1, vpnname "_pass.txt"; next } 
+        /^(ca|cert|key)/ { print $1, vpnname "_" $2; next }
+        { print $0}
+    ' *.ovpn > "${vpnname}.conf"
+
+    echo 'up /etc/openvpn/update-resolv-conf.sh' >> "${vpnname}.conf"
+    echo 'down /etc/openvpn/update-resolv-conf.sh' >> "${vpnname}.conf"
+
+    sudo curl -s 'https://raw.githubusercontent.com/alfredopalhares/openvpn-update-resolv-conf/master/update-resolv-conf.sh' \
+        -o /etc/openvpn/update-resolv-conf.sh
+
+    sudo chmod +x /etc/openvpn/update-resolv-conf.sh
+    sudo cp * /etc/openvpn/client/
+
+    echo "$vpnname vpn installed"
+    echo "run 'vpn start ${vpnname}' to start the vpn"
+    echo "run 'vpn stop ${vpnname}' to stop the vpn"
+}
+
+function startstop {
+    [ $action == "start" ] && disable_ipv6=1 || disable_ipv6=0
+
+    echo -e "Current IP: $(curl -s ifconfig.me)\n"
+
+    sudo systemctl "$action" "openvpn-client@$name" \
+        && echo "$action $name : done"
+
+    sudo sysctl -wq "net.ipv6.conf.all.disable_ipv6=$disable_ipv6" \
+        && echo "set disable_ipv6=${disable_ipv6} : done"
+
+    echo -e "\nNew IP: $(curl -s ifconfig.me)"
+}
+
+
+[ $action == "-h" ] && showhelp && exit
+[ $action == "install" ] && install && exit
+[ $action == "start" ] && startstop && exit
+[ $action == "stop" ] && startstop && exit
