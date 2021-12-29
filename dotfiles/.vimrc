@@ -10,9 +10,9 @@ syntax on
 let mapleader = " "
 
 filetype indent on
-set tabstop=8
-set expandtab
-set shiftwidth=4
+set tabstop=2
+set noexpandtab
+set shiftwidth=2
 set autoindent
 set smartindent
 set cindent
@@ -22,6 +22,7 @@ set encoding=utf-8
 set visualbell
 
 set listchars=tab:▸\ ,eol:¬
+set list
 
 :nnoremap ZZ :xa<CR>
 
