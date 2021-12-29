@@ -1,0 +1,6 @@
+sxhkd &
+[ -f ~/.fehbg ] && ~/.fehbg &
+xset r rate 250 40 &
+[[ -f "$XDG_CONFIG_HOME/X11/xmodmap" ]] && xmodmap "$XDG_CONFIG_HOME/X11/xmodmap" &
+dwm-status &
+dwm

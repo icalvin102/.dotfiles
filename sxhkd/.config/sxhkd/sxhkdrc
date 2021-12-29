@@ -1,0 +1,24 @@
+super + o
+        st & st & brave
+
+super + BackSpace
+        eval $(echo -e "shutdown -P now\nreboot" | dmenu)
+
+super + x
+	addshortcut
+
+# Toggle mute of pulseaudio default device
+super + u ; {u,1,2,3,4,5,6,7,8,9,0}
+	keyboardVolume {mute,10%,20%,30%,40%,50%,60%,70%,80%,90%,0%}
+
+# Grab screenshot
+super + g ; {g,s,w}
+        maim { ,-s,--window $(xdotool getactivewindow)} ~/Downloads/screenshots/$(date +%s).png
+
+super + y
+        mpv --ytdl-format='bestvideo[height<=?720][fps<=?30][vcodec!=?vp9]+bestaudio/best' $(xclip -selection clipboard -o)
+
+
+# Emulate media keys
+super + {Left,Down,Right}
+        xdotool keyup {Left key --clearmodifiers XF86AudioPrev,Down key --clearmodifiers XF86AudioPlay,Right key --clearmodifiers XF86AudioNext}
