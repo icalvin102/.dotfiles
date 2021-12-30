@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+BOOT_PARTITION="/dev/sda1"
+ROOT_PARTITION="/dev/sda2"
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
+mount "$ROOT_PARTITION" /mnt
+mkdir /mnt/boot
+mount "$BOOT_PARTITION" /mnt/boot
+
+pacstrap /mnt base base-devel linux linux-firmware networkmanager openssh git neovim
+
+genfstab -U /mnt > /mnt/etc/fstab
+
+cp "${SCRIPT_DIR}/chroot" /mnt/chroot
+
+arch-chroot /mnt bash /chroot
+
+rm /mnt/chroot

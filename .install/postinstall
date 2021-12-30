@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+[ -f "$SCRIPT_DIR/pacman_pkg_list" ] && PACMAN_PKGS=$(< "$SCRIPT_DIR/pacman_pkg_list")
+[ -f "$SCRIPT_DIR/yay_pkg_list" ] && YAY_PKGS=$(< "$SCRIPT_DIR/yay_pkg_list")
+
+function install_yay() {
+	cd /tmp
+	git clone https://aur.archlinux.org/yay.git
+	cd yay
+	makepkg -si
+	cd /tmp && rm -rf yay
+}
+
+function install_custom_build() {
+	cd /tmp
+	git clone "https://github.com/icalvin102/${1}.git"
+	cd "$1" 
+	make && sudo make install
+	cd .. && rm -rf "$1"
+}
+
+sudo pacman -S --needed --noconfirm git base-devel xorg xorg-xinit stow $PACMAN_PKGS
+
+install_yay
+
+yay -S --needed --noconfirm $YAY_PKGS
+
+install_custom_build dwm
+install_custom_build st
+
+rm ~/.bash*
+cd "$SCRIPT_DIR/.."
+stow */
