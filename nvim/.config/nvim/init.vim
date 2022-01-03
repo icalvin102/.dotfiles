@@ -41,6 +41,13 @@ set list
 :nnoremap <A-k> <C-w>k
 :nnoremap <A-l> <C-w>l
 
+" auto install plug if its not installed
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
 call plug#begin('~/.local/share/nvim/plugged')
 
 " assuming you're using vim-plug: https://github.com/junegunn/vim-plug
@@ -52,25 +59,6 @@ Plug 'mattn/emmet-vim'
 let g:user_emmet_leader_key=','
 
 Plug 'evanleck/vim-svelte'
-
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-nnoremap <leader>a :Buffers<CR>
-
-
-" svelte-nerdfonts fzf completion
-function! s:join_lines(lines)
-  return join(a:lines, "\n") 
-endfunction
-
-let snf_sed = 'sed -e ''s/export/import/'' -e ''s/\.\//svelte-nerdfonts\/icons\//''' 
-let snf_path = '"$(git rev-parse --show-toplevel)/node_modules/svelte-nerdfonts/icons/index.js"'
-inoremap <expr> <c-x>i fzf#vim#complete({
-    \ 'source': snf_sed . ' ' . snf_path,
-    \ 'reducer': function('<sid>join_lines'),
-    \ 'options': '--multi'})
 
 
 Plug 'tpope/vim-fugitive'
