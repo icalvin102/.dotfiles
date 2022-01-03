@@ -7,6 +7,14 @@ bootctl --path=/boot install
 echo -e "timeout 3\ndefault arch" > /boot/loader/loader.conf
 echo -e "title Arch Linux\nlinux /vmlinuz-linux\ninitrd /initramfs-linux.img\noptions root=${ROOT_PARTITION} rw" > /boot/loader/entries/arch.conf
 
+ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+hwclock --systohc
+
+sed 's/#\(de_DE.UTF-8\|en_US.UTF-8\)/\1/' /etc/locale.gen > /etc/locale.gen
+locale-gen
+
+echo 'LANG=en_US.UTF-8' > /etc/locale.conf
+
 
 echo "$SEPERATOR"
 echo "Set root password"
