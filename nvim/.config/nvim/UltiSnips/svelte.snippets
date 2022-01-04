@@ -1,0 +1,45 @@
+extends html, javascript, typescript, css
+
+snippet svelte "Svelte Skeleton"
+<script type="ts">
+	$1
+</script>
+
+$2
+
+<style>
+</style>
+endsnippet
+
+snippet route "Svelte Route Skeleton"
+<script type="ts" context="module">
+	export async function load({page, context, uses}) {
+		$1
+
+		return {
+			props: {
+			},
+		}
+	}
+</script>
+
+<script type="ts">
+	$2
+</script>
+
+$3
+
+<style>
+</style>
+endsnippet
+
+snippet inputf "Form Input"
+<Input name="$1"
+	bind:value="{${2:$form.$1}}"
+	error="{${3:$errors.$1}}"
+/>
+endsnippet
+
+snippet tra "string literal with TRANSLATION_PREFIX" w
+\`\$\{TRANSLATION_PREFIX\}.$1\`
+endsnippet
