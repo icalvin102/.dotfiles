@@ -100,6 +100,8 @@ Plug 'vimwiki/vimwiki'
 let g:vimwiki_list = [{'syntax': 'markdown', 'ext': '.md'}]
 Plug 'icalvin102/vimwiki-sync'
 
+Plug 'bronson/vim-visual-star-search'
+
 call plug#end()
 
 lua <<EOF
