@@ -22,7 +22,7 @@ get_wifi_ssid(){
 }
 
 update(){
-    xsetroot -name " $(get_volume) $S $(get_date) " &
+  xsetroot -name " $(get_battery) $S $(get_volume) $S $(get_date) " &
     wait
 }
 

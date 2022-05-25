@@ -1,6 +1,14 @@
+alsa-lib
+arandr
 dmenu
 fzf
 jq
 neovim
+pavucontrol
+pulseaudio
+python
+python-pip
+python2
+stow
 sxhkd
 sxiv
