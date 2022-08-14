@@ -58,6 +58,13 @@ return packer.startup(function(use)
   use {'vimwiki/vimwiki', config = function() vim.g.vimwiki_list = {{syntax = 'markdown', ext = '.md'}} end}
   use 'icalvin102/vimwiki-sync'
 
+  -- MarkdownPreview
+  use { "iamcco/markdown-preview.nvim",
+    run = "cd app && npm install",
+    setup = function() vim.g.mkdp_filetypes = { "markdown" } end,
+    ft = { "markdown" },
+  }
+
   -- Formatting
   use {'sbdchd/neoformat', config = function() vim.g.neoformat_try_node_exe = 1 end}
 
