@@ -10,6 +10,7 @@ return function()
     "svelte",
     "tailwindcss",
     "tsserver",
+    "graphql",
   }
 
   for _, name in pairs(servers) do
@@ -76,4 +77,5 @@ return function()
   lspconfig.tailwindcss.setup(opts)
   lspconfig.tsserver.setup(opts)
   lspconfig.sumneko_lua.setup(opts)
+  lspconfig.graphql.setup(opts)
 end

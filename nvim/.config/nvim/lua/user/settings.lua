@@ -21,3 +21,5 @@ vim.o.visualbell = true
 vim.opt.listchars.tab = '▸ '
 vim.opt.listchars.eol = '¬'
 vim.o.list = true
+
+vim.cmd [[command SvelteCheck call setqflist(map(map(systemlist("npm run check | grep -P '^/home'"), {_, val -> split(val, ':')}), {_, val -> #{filename: val[0], lnum: val[1], col: val[2]}}))]]
