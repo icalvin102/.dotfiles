@@ -11,6 +11,7 @@ return function()
     "tailwindcss",
     "tsserver",
     "graphql",
+    "rust_analyzer",
   }
 
   for _, name in pairs(servers) do
@@ -78,4 +79,5 @@ return function()
   lspconfig.tsserver.setup(opts)
   lspconfig.sumneko_lua.setup(opts)
   lspconfig.graphql.setup(opts)
+  lspconfig.rust_analyzer.setup(opts)
 end
