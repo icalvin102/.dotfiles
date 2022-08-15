@@ -23,6 +23,11 @@ super + y
 super + {Left,Down,Right}
         xdotool keyup {Left key --clearmodifiers XF86AudioPrev,Down key --clearmodifiers XF86AudioPlay,Right key --clearmodifiers XF86AudioNext}
 
+# Force display sleep
 ctrl + alt + l
-        sh -c 'sleep 1 && setx dpms force off'
+        sh -c 'sleep 1 && xset dpms force off'
+
+# Reload sxhkdrc
+super + shift + r
+    pkill -usr1 -x sxhkd; notify-send 'sxhkd' 'Reloaded config'
 
