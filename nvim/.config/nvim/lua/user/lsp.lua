@@ -59,7 +59,7 @@ return function()
   local lspconfig = require("lspconfig")
   require("nvim-lsp-installer").setup { }
 
-  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
   -- Register a handler that will be called for all installed servers.
   -- Alternatively, you may also register handlers on specific server instances instead (see example below).
   local opts = {
