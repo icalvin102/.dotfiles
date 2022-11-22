@@ -1,0 +1,8 @@
+#!/bin/bash
+
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+[ -t 0 ] && CMD='fzf' || CMD='dmenu'
+
+LAYOUT=$(ls "${SCRIPT_DIR}/screenlayout" | $CMD)
+
+bash "${SCRIPT_DIR}/${LAYOUT}"
