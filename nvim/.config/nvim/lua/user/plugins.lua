@@ -18,8 +18,18 @@ return packer.startup(function(use)
   use 'wbthomason/packer.nvim'
 
   -- LSP
-  use 'neovim/nvim-lspconfig'
-  use {'williamboman/nvim-lsp-installer', config = require('user.lsp')}
+  use {
+    'neovim/nvim-lspconfig',
+    requires = {
+      -- Automatically install LSPs to stdpath for neovim
+      'williamboman/mason.nvim',
+      'williamboman/mason-lspconfig.nvim',
+
+      -- Useful status updates for LSP
+      'j-hui/fidget.nvim',
+    },
+    config = require('user.lsp')
+  }
 
   -- Completion
   use {'L3MON4D3/LuaSnip', config = require('user.luasnip')}

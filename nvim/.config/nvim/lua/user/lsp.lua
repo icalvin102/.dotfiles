@@ -1,6 +1,4 @@
 return function()
-  local lsp_installer = require("nvim-lsp-installer")
-
   -- Include the servers you want to have installed by default below
   local servers = {
     "cssls",
@@ -14,16 +12,11 @@ return function()
     "rust_analyzer",
   }
 
-  for _, name in pairs(servers) do
-    local server_is_found, server = lsp_installer.get_server(name)
-    if server_is_found then
-      if not server:is_installed() then
-        print("Installing " .. name)
-        server:install()
-      end
-    end
-  end
-
+  require("mason").setup { }
+  -- Ensure the servers above are installed
+  require('mason-lspconfig').setup {
+    ensure_installed = servers,
+  }
 
   local on_attach = function(client, bufnr)
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -56,9 +49,6 @@ return function()
 
   end
 
-  local lspconfig = require("lspconfig")
-  require("nvim-lsp-installer").setup { }
-
   local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
   -- Register a handler that will be called for all installed servers.
   -- Alternatively, you may also register handlers on specific server instances instead (see example below).
@@ -70,14 +60,7 @@ return function()
     }
   }
 
-  lspconfig.cssls.setup(opts)
-  lspconfig.eslint.setup(opts)
-  lspconfig.html.setup(opts)
-  lspconfig.jsonls.setup(opts)
-  lspconfig.svelte.setup(opts)
-  lspconfig.tailwindcss.setup(opts)
-  lspconfig.tsserver.setup(opts)
-  lspconfig.sumneko_lua.setup(opts)
-  lspconfig.graphql.setup(opts)
-  lspconfig.rust_analyzer.setup(opts)
+  for _, server in ipairs(servers) do
+    require('lspconfig')[server].setup(opts)
+  end
 end
