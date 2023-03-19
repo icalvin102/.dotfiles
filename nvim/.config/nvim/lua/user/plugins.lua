@@ -41,6 +41,15 @@ return packer.startup(function(use)
   use {'hrsh7th/nvim-cmp', config = require('user.cmp') }
   use {'mattn/emmet-vim', config = function() vim.g.user_emmet_leader_key = ',' end}
 
+  use {
+  'Exafunction/codeium.vim',
+  config = function ()
+    -- Change '<C-g>' here to any keycode you like.
+    vim.g.codeium_no_map_tab = 1
+    vim.keymap.set('i', '<C-g>', function () return vim.fn['codeium#Accept']() end, { expr = true })
+  end
+}
+
   -- Tresitter
   use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', config = require('user.tresitter')}
   use 'nvim-treesitter/playground'
