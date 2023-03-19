@@ -1,21 +1,31 @@
 return function()
+  local mason = require('mason')
+  local mason_lspconfig = require('mason-lspconfig')
+
   -- Include the servers you want to have installed by default below
   local servers = {
-    "cssls",
-    "eslint",
-    "html",
-    "jsonls",
-    "svelte",
-    "tailwindcss",
-    "tsserver",
-    "graphql",
-    "rust_analyzer",
+    cssls = {},
+    eslint = {},
+    html = {},
+    jsonls = {},
+    svelte = {},
+    tailwindcss = {},
+    tsserver = {},
+    graphql = {},
+    rust_analyzer = {},
+
+    lua_ls = {
+      Lua = {
+        workspace = { checkThirdParty = false },
+        telemetry = { enable = false },
+      },
+    },
   }
 
-  require("mason").setup { }
-  -- Ensure the servers above are installed
-  require('mason-lspconfig').setup {
-    ensure_installed = servers,
+  mason.setup { }
+
+  mason_lspconfig.setup {
+    ensure_installed = vim.tbl_keys(servers),
   }
 
   local on_attach = function(client, bufnr)
@@ -50,17 +60,17 @@ return function()
   end
 
   local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-  -- Register a handler that will be called for all installed servers.
-  -- Alternatively, you may also register handlers on specific server instances instead (see example below).
-  local opts = {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    flags = {
-      debounce_text_changes = 150,
-    }
-  }
 
-  for _, server in ipairs(servers) do
-    require('lspconfig')[server].setup(opts)
-  end
+  mason_lspconfig.setup_handlers {
+    function(server_name)
+      require('lspconfig')[server_name].setup {
+        capabilities = capabilities,
+        on_attach = on_attach,
+        settings = servers[server_name],
+        flags = {
+          debounce_text_changes = 150,
+        }
+      }
+    end,
+  }
 end
