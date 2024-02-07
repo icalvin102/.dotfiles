@@ -10,3 +10,5 @@
     conflictstyle = diff3
 [mergetool "nvimdiff"]
     cmd = nvim -d $LOCAL $MERGED $REMOTE $BASE
+[init]
+	defaultBranch = main
