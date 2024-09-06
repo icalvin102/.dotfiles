@@ -12,7 +12,7 @@ vim.o.expandtab = true
 vim.o.autoindent = true
 vim.o.smartindent = true
 vim.o.cindent = true
-vim.o.colorcolumn = 79
+vim.o.colorcolumn = '79'
 
 vim.o.encoding = 'utf-8'
 

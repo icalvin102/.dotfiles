@@ -13,13 +13,6 @@ return function()
     tsserver = {},
     graphql = {},
     rust_analyzer = {},
-
-    lua_ls = {
-      Lua = {
-        workspace = { checkThirdParty = false },
-        telemetry = { enable = false },
-      },
-    },
   }
 
   mason.setup { }
