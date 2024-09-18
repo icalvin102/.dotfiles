@@ -1,7 +1,5 @@
 #!/bin/bash
 
-defaultsink=$(pactl info | awk -F \:\  '/Default Sink/ {print $2}')
-
-[ $1 == 'mute' ] && pactl set-sink-mute $defaultsink toggle || pactl set-sink-volume $defaultsink $1
+[ $1 == 'mute' ] && wpctl set-sink-mute @DEFAULT_SINK@ toggle || wpctl set-sink-volume @DEFAULT_SINK@ $1
 
 refresh-dwm-status
