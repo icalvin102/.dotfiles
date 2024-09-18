@@ -1,7 +1,14 @@
 #!/usr/bin/env bash
 
-BOOT_PARTITION="/dev/sda1"
-ROOT_PARTITION="/dev/sda2"
+get_partition() {
+    echo "Available partitions:"
+    lsblk
+    read -p "Please enter the $1 partition (e.g., /dev/sda1): " PARTITION
+    echo "$PARTITION"
+}
+
+BOOT_PARTITION=${1:-$(get_partition "BOOT")}
+ROOT_PARTITION=${2:-$(get_partition "ROOT")}
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 mount "$ROOT_PARTITION" /mnt
