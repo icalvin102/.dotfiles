@@ -5,22 +5,31 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 [ -f "$SCRIPT_DIR/yay_pkg_list" ] && YAY_PKGS=$(< "$SCRIPT_DIR/yay_pkg_list")
 
 function install_yay() {
-	cd /tmp
-	git clone https://aur.archlinux.org/yay.git
-	cd yay
-	makepkg -si
-	cd /tmp && rm -rf yay
+  if command -v yay &> /dev/null; then
+    echo "'yay' is already installed. Skipping installation."
+  else
+    echo "Installing 'yay' AUR helper..."
+    cd /tmp
+    git clone https://aur.archlinux.org/yay.git
+    cd yay
+    makepkg -si --noconfirm
+    cd ~
+  fi
 }
 
 function install_custom_build() {
-	cd /tmp
-	git clone "https://github.com/icalvin102/${1}.git"
-	cd "$1" 
-	make && sudo make install
-	cd .. && rm -rf "$1"
+  echo "Installing $1..."
+  cd /tmp
+  git clone "https://github.com/icalvin102/${1}.git"
+  cd "$1" 
+  make && sudo make install
+  cd .. && rm -rf "$1"
 }
 
-sudo pacman -S --needed --noconfirm git base-devel xorg xorg-xinit stow $PACMAN_PKGS
+sudo pacman -S xorg xorg-xinit docker stow $PACMAN_PKGS
+
+sudo systemctl enable --now docker.service
+sudo usermod -aG docker "$USER"
 
 install_yay
 
@@ -31,4 +40,4 @@ install_custom_build st
 
 rm ~/.bash*
 cd "$SCRIPT_DIR/.."
-stow */
+stow -t ~ */
