@@ -1,103 +1,166 @@
-local fn = vim.fn
-local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-if fn.empty(fn.glob(install_path)) > 0 then
-  packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-end
-
-local packer = require('packer')
-
-vim.api.nvim_create_autocmd({'BufWritePost'}, {
-  pattern = 'plugins.lua',
-  callback = function(args)
-    vim.cmd('source ' .. args.file)
-    packer.sync()
+-- Bootstrap lazy.nvim
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
+  local out = vim.fn.system({ 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { 'Failed to clone lazy.nvim:\n', 'ErrorMsg' },
+      { out, 'WarningMsg' },
+      { '\nPress any key to exit...' },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
   end
-})
+end
+vim.opt.rtp:prepend(lazypath)
 
-return packer.startup(function(use)
-  use 'wbthomason/packer.nvim'
 
+
+plugins = {
   -- LSP
-  use {
+  {
     'neovim/nvim-lspconfig',
-    requires = {
-      -- Automatically install LSPs to stdpath for neovim
+    dependencies = {
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
-
-      -- Useful status updates for LSP
-      'j-hui/fidget.nvim',
+      { 'j-hui/fidget.nvim', opts = {} },
+      'hrsh7th/cmp-nvim-lsp',
     },
     config = require('user.lsp')
-  }
+  },
 
   -- Completion
-  use {'L3MON4D3/LuaSnip', config = require('user.luasnip')}
-  use 'hrsh7th/cmp-nvim-lsp'
-  use 'hrsh7th/cmp-buffer'
-  use 'hrsh7th/cmp-path'
-  use 'hrsh7th/cmp-cmdline'
-  use 'saadparwaiz1/cmp_luasnip'
-  use {'hrsh7th/nvim-cmp', config = require('user.cmp') }
-  use {'mattn/emmet-vim', config = function() vim.g.user_emmet_leader_key = ',' end}
-
-  use {
-  'Exafunction/codeium.vim',
-  config = function ()
-    -- Change '<C-g>' here to any keycode you like.
-    vim.g.codeium_no_map_tab = 1
-    vim.keymap.set('i', '<C-g>', function () return vim.fn['codeium#Accept']() end, { expr = true })
-  end
-}
+  {
+    'hrsh7th/nvim-cmp',
+    event = { 'InsertEnter', 'CmdlineEnter' },
+    dependencies = {
+      {
+        'L3MON4D3/LuaSnip',
+        build = (function()
+          -- Build Step is needed for regex support in snippets.
+          -- This step is not supported in many windows environments.
+          -- Remove the below condition to re-enable on windows.
+          if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
+            return
+          end
+          return 'make install_jsregexp'
+        end)(),
+        config = require('user.luasnip')
+      },
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
+      'hrsh7th/cmp-cmdline',
+      'saadparwaiz1/cmp_luasnip',
+    },
+    config = require('user.cmp')
+  },
 
   -- Tresitter
-  use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', config = require('user.tresitter')}
-  use 'nvim-treesitter/playground'
+  {
+    'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate',
+    dependencies = {
+      'nvim-treesitter/playground'
+    },
+    main = 'nvim-treesitter.configs',
+    opts = {
+      ensure_installed = {
+        'bash',
+        'diff',
+        'html',
+        'lua',
+        'luadoc',
+        'markdown',
+        'markdown_inline',
+        'query',
+        'vim',
+        'vimdoc',
+        'typescript',
+        'svelte',
+        'javascript',
+        'json',
+        'python'
+      },
+      auto_install = true,
+      highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = {  },
+      },
+      indent = { enable = true, disable = {  } },
+      playground = {
+        enable = true,
+        disable = {},
+        updatetime = 25,
+        persist_queries = false,
+        keybindings = {
+          toggle_query_editor = 'o',
+          toggle_hl_groups = 'i',
+          toggle_injected_languages = 't',
+          toggle_anonymous_nodes = 'a',
+          toggle_language_display = 'I',
+          focus_language = 'f',
+          unfocus_language = 'F',
+          update = 'R',
+          goto_node = '<cr>',
+          show_help = '?',
+        },
+      },
+    },
+  },
 
-  -- Colorschemes
-  use {'npxbr/gruvbox.nvim', branch = 'main', config = function()
-    vim.cmd [[
+  -- Colorscheme
+  {
+    'npxbr/gruvbox.nvim',
+    lazy = false,
+    priority = 1000,
+    branch = 'main',
+    config = function()
+      vim.cmd [[
       syntax on
       set termguicolors
       colorscheme gruvbox
-    ]]
-  end}
+      ]]
+    end
+  },
 
   -- Telescope
-  use 'nvim-lua/plenary.nvim'
-  use { 'nvim-telescope/telescope.nvim', config = require('user.telescope') }
-  use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+  {
+    'nvim-telescope/telescope.nvim',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope-fzf-native.nvim',
+      build = 'make'
+    },
+    config = require('user.telescope')
+  },
 
   -- Git
-  use 'tpope/vim-fugitive'
-  use 'shumphrey/fugitive-gitlab.vim'
-  use 'airblade/vim-gitgutter'
+  'tpope/vim-fugitive',
+  'airblade/vim-gitgutter',
 
   -- Vimwiki
-  use {'vimwiki/vimwiki', config = function() vim.g.vimwiki_list = {{syntax = 'markdown', ext = '.md'}} end}
-  use 'icalvin102/vimwiki-sync'
-
-  -- MarkdownPreview
-  use { "iamcco/markdown-preview.nvim",
-    run = "cd app && npm install",
-    setup = function() vim.g.mkdp_filetypes = { "markdown" } end,
-    ft = { "markdown" },
-  }
-
-  -- Formatting
-  use {'sbdchd/neoformat', config = function() vim.g.neoformat_try_node_exe = 1 end}
+  {
+    'vimwiki/vimwiki',
+    config = function() vim.g.vimwiki_list = {{syntax = 'markdown', ext = '.md'}} end
+  },
 
   -- Filetype
-  use 'elzr/vim-json'
-  use {'leafOfTree/vim-svelte-plugin', config = function() vim.g.vim_svelte_plugin_use_typescript = 1 end}
+  'elzr/vim-json',
+  {
+    'leafOfTree/vim-svelte-plugin',
+    config = function()
+      vim.g.vim_svelte_plugin_use_typescript = 1
+    end
+  },
 
-  -- Utility
-  use 'bronson/vim-visual-star-search'
-  use 'roxma/nvim-yarp'
+  -- Utilitiy
+  'bronson/vim-visual-star-search',
+  'roxma/nvim-yarp',
+}
 
-  -- Automatically set up your configuration after cloning packer.nvim
-  -- Put this at the end after all plugins
-  if packer_bootstrap then
-    packer.sync()
-  end
-end)
+require('lazy').setup({
+  spec = plugins,
+  checker = { enabled = true }
+})
