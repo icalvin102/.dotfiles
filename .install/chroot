@@ -2,7 +2,8 @@
 
 ROOT_PARTITION="$(df | awk '/\/$/ {print $1}')"
 SEPARATOR="================="
-DOTFILES_REPO="https://github.com/icalvin102/.dotfiles.git"
+DOTFILES_REPO_HTTPS="https://github.com/icalvin102/.dotfiles.git"
+DOTFILES_REPO_SSH="git@github.com:icalvin102/.dotfiles.git"
 
 bootctl --path=/boot install
 echo -e "timeout 3\ndefault arch" > /boot/loader/loader.conf
@@ -44,7 +45,8 @@ systemctl enable sshd
 read -p "Do you want to install the dotfiles? (y/n): " INSTALL_DOTFILES
 
 if [[ "$INSTALL_DOTFILES" =~ ^[Yy]$ ]]; then
-  sudo -u "$USERNAME" bash -c "git clone $DOTFILES_REPO ~/.dotfiles"
+  sudo -u "$USERNAME" bash -c "git clone https://github.com/$DOTFILES_REPO ~/.dotfiles"
+  sudo -u "$USERNAME" bash -c "git -C ~/.dotfiles remote set-url origin git@github.com:$DOTFILES_REPO"
   sudo -u "$USERNAME" bash -c "bash ~/.dotfiles/.install/postinstall"
 fi
 
