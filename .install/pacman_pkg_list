@@ -5,10 +5,10 @@ fzf
 gvfs
 jq
 neovim
+pavucontrol
 pipewire-alsa
 pipewire-audio
 pipewire-pulse
-pwvucontrol
 python
 python-pip
 qpwgraph
