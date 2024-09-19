@@ -1,5 +1,5 @@
 #!/bin/bash
 
-[ $1 == 'mute' ] && wpctl set-sink-mute @DEFAULT_SINK@ toggle || wpctl set-sink-volume @DEFAULT_SINK@ $1
+[ $1 == 'mute' ] && wpctl set-mute @DEFAULT_SINK@ toggle || wpctl set-volume @DEFAULT_SINK@ $1
 
 refresh-dwm-status
