@@ -11,6 +11,10 @@ get_volume(){
     echo "$(wpctl get-volume @DEFAULT_SINK@)"
 }
 
+get_brigtness(){
+    echo "Brightness $(($(($(brightnessctl get) * 100))  / $(brightnessctl max)))%"
+}
+
 get_battery(){
     CAPACITY=$(cat /sys/class/power_supply/BAT0/capacity)
     STATUS=$(sed 's/Not charging/~/;s/Charging/+/;s/Discharging/=/' /sys/class/power_supply/BAT0/status)
@@ -22,7 +26,7 @@ get_wifi_ssid(){
 }
 
 update(){
-  xsetroot -name " $(get_battery) $S $(get_volume) $S $(get_date) " &
+  xsetroot -name " $(get_battery) $S $(get_volume) $S $(get_brigtness) $S $(get_date) " &
     wait
 }
 
