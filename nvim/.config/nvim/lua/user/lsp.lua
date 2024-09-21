@@ -6,13 +6,13 @@ return function()
   local servers = {
     cssls = {},
     eslint = {},
+    graphql = {},
     html = {},
     jsonls = {},
+    rust_analyzer = {},
     svelte = {},
     tailwindcss = {},
-    tsserver = {},
-    graphql = {},
-    rust_analyzer = {},
+    ts_ls = {},
   }
 
   mason.setup { }
