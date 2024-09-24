@@ -30,6 +30,7 @@ sudo pacman -S xorg xorg-xinit docker stow $PACMAN_PKGS
 
 sudo systemctl enable --now docker.service
 sudo usermod -aG docker "$USER"
+sudo fc-cache -fv
 
 install_yay
 

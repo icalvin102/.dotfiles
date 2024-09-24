@@ -5,7 +5,11 @@ dmenu
 fzf
 gvfs
 jq
+maim
 neovim
+nodejs
+noto-fonts-emoji
+npm
 pavucontrol
 pipewire-alsa
 pipewire-audio
@@ -22,3 +26,4 @@ thunar-volman
 ttf-hack-nerd
 wireplumber
 xclip
+yazi
