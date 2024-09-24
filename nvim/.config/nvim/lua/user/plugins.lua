@@ -147,7 +147,12 @@ plugins = {
     },
     config = true
   },
-  'lewis6991/gitsigns.nvim',
+  {
+    'lewis6991/gitsigns.nvim',
+    cmd = 'Gitsigns',
+    lazy = true,
+    config = true
+  },
 
   -- Vimwiki
   {
