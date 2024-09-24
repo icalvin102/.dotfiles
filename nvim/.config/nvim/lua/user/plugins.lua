@@ -145,7 +145,14 @@ plugins = {
 
       'nvim-telescope/telescope.nvim', -- optional
     },
-    config = true
+    config = true,
+    keys = {
+      { '<leader>gs', '<cmd>Neogit<cr>', desc = 'Neogit Open' },
+      { '<leader>gc', '<cmd>Neogit commit<cr>', desc = 'Neogit Commit' },
+      { '<leader>gp', '<cmd>Neogit pull<cr>', desc = 'Neogit Pull' },
+      { '<leader>gP', '<cmd>Neogit push<cr>', desc = 'Neogit Push' },
+      { '<leader>gb', '<cmd>Telescope git_branches<cr>', desc = 'Telescope Git Branches' },
+    },
   },
   {
     'lewis6991/gitsigns.nvim',
