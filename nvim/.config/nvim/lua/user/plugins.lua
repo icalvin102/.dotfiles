@@ -137,8 +137,17 @@ plugins = {
   },
 
   -- Git
-  'tpope/vim-fugitive',
-  'airblade/vim-gitgutter',
+  {
+    'NeogitOrg/neogit',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'sindrets/diffview.nvim',
+
+      'nvim-telescope/telescope.nvim', -- optional
+    },
+    config = true
+  },
+  'lewis6991/gitsigns.nvim',
 
   -- Vimwiki
   {
