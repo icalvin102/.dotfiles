@@ -111,15 +111,15 @@ plugins = {
 
   -- Colorscheme
   {
-    'npxbr/gruvbox.nvim',
+    "ellisonleao/gruvbox.nvim",
     lazy = false,
     priority = 1000,
-    branch = 'main',
     config = function()
       vim.cmd [[
       syntax on
       set termguicolors
       colorscheme gruvbox
+      hi! SignColumn guibg=NONE
       ]]
     end
   },
