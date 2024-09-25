@@ -16,7 +16,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 
-
 plugins = {
   -- LSP
   {
@@ -157,7 +156,7 @@ plugins = {
   {
     'lewis6991/gitsigns.nvim',
     cmd = 'Gitsigns',
-    lazy = true,
+    lazy = false,
     config = true
   },
 
@@ -179,6 +178,23 @@ plugins = {
   -- Utilitiy
   'bronson/vim-visual-star-search',
   'roxma/nvim-yarp',
+
+  -- Mini.nvim
+  { 'echasnovski/mini.ai',
+    version = false,
+    config = true,
+    main = 'mini.ai',
+  },
+  { 'echasnovski/mini.comment',
+    version = false,
+    config = true,
+    main = 'mini.comment',
+  },
+  { 'echasnovski/mini.statusline',
+    version = false,
+    config = true,
+    main = 'mini.statusline',
+  },
 }
 
 require('lazy').setup({
