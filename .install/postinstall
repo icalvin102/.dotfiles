@@ -39,6 +39,8 @@ yay -S --needed --noconfirm $YAY_PKGS
 install_custom_build dwm
 install_custom_build st
 
+mkdir -p ~/.config ~/.local ~/.cache
+
 rm ~/.bash*
 cd "$SCRIPT_DIR/.."
 stow -t ~ */
