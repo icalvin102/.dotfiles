@@ -195,6 +195,11 @@ plugins = {
     config = true,
     main = 'mini.statusline',
   },
+
+  {
+    'stevearc/dressing.nvim',
+    opts = {},
+  },
 }
 
 require('lazy').setup({
