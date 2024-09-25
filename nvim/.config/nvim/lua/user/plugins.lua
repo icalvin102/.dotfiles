@@ -140,7 +140,6 @@ plugins = {
     'NeogitOrg/neogit',
     dependencies = {
       'nvim-lua/plenary.nvim',
-      'sindrets/diffview.nvim',
 
       'nvim-telescope/telescope.nvim', -- optional
     },
@@ -151,6 +150,12 @@ plugins = {
       { '<leader>gp', '<cmd>Neogit pull<cr>', desc = 'Neogit Pull' },
       { '<leader>gP', '<cmd>Neogit push<cr>', desc = 'Neogit Push' },
       { '<leader>gb', '<cmd>Telescope git_branches<cr>', desc = 'Telescope Git Branches' },
+    },
+  },
+  {
+    'sindrets/diffview.nvim',
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
     },
   },
   {
