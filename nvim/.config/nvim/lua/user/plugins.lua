@@ -16,7 +16,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 
-plugins = {
+local plugins = {
   -- LSP
   {
     'neovim/nvim-lspconfig',
@@ -27,6 +27,18 @@ plugins = {
       'hrsh7th/cmp-nvim-lsp',
     },
     config = require('user.lsp')
+  },
+  {
+    'zeioth/none-ls-autoload.nvim',
+    event = 'BufEnter',
+    dependencies = {
+      'williamboman/mason.nvim',
+      {
+        'nvimtools/none-ls.nvim',
+        config = true,
+      },
+    },
+    opts = {},
   },
 
   -- Completion
