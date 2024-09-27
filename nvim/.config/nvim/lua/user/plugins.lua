@@ -208,7 +208,6 @@ local plugins = {
 
 	-- Mini.nvim
 	{ "echasnovski/mini.ai", version = false, config = true, main = "mini.ai" },
-	{ "echasnovski/mini.comment", version = false, config = true, main = "mini.comment" },
 	{ "echasnovski/mini.files", version = false, config = true, main = "mini.files" },
 	{ "echasnovski/mini.statusline", version = false, config = true, main = "mini.statusline" },
 
