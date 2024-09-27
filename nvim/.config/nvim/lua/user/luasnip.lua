@@ -5,13 +5,13 @@ return function()
 		if ls.expand_or_jumpable() then
 			ls.expand_or_jump()
 		end
-	end, { silent = true })
+	end, { silent = true, desc = "Luasnip expand or jump up" })
 
 	vim.keymap.set({ "i", "s" }, "<c-j>", function()
 		if ls.jumpable(-1) then
 			ls.jump(-1)
 		end
-	end, { silent = true })
+	end, { silent = true, desc = "Luasnip jump down" })
 
 	ls.add_snippets("svelte", {
 		ls.parser.parse_snippet(

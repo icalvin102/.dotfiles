@@ -1,17 +1,24 @@
 local opts = { noremap = true, silent = true }
 
-vim.keymap.set("n", "ZZ", ":xa<CR>", opts)
+local function switch_window(direction)
+	return function()
+		vim.cmd("wincmd " .. direction)
+	end
+end
 
--- Window Navigation
-vim.keymap.set("t", "<A-h>", [[<C-\><C-N><C-w>h]], opts)
-vim.keymap.set("t", "<A-j>", [[<C-\><C-N><C-w>j]], opts)
-vim.keymap.set("t", "<A-k>", [[<C-\><C-N><C-w>k]], opts)
-vim.keymap.set("t", "<A-l>", [[<C-\><C-N><C-w>l]], opts)
-vim.keymap.set("i", "<A-h>", [[<C-\><C-N><C-w>h]], opts)
-vim.keymap.set("i", "<A-j>", [[<C-\><C-N><C-w>j]], opts)
-vim.keymap.set("i", "<A-k>", [[<C-\><C-N><C-w>k]], opts)
-vim.keymap.set("i", "<A-l>", [[<C-\><C-N><C-w>l]], opts)
-vim.keymap.set("n", "<A-h>", "<C-w>h", opts)
-vim.keymap.set("n", "<A-j>", "<C-w>j", opts)
-vim.keymap.set("n", "<A-k>", "<C-w>k", opts)
-vim.keymap.set("n", "<A-l>", "<C-w>l", opts)
+local mappings = {
+  -- Window Navigation
+	{ { "n", "i", "t" }, "<A-h>", switch_window("h"), { desc = "Switch window left" } },
+	{ { "n", "i", "t" }, "<A-j>", switch_window("j"), { desc = "Switch window down" } },
+	{ { "n", "i", "t" }, "<A-k>", switch_window("k"), { desc = "Switch window up" } },
+	{ { "n", "i", "t" }, "<A-l>", switch_window("l"), { desc = "Switch window right" } },
+}
+
+for _, mapping in ipairs(mappings) do
+	vim.keymap.set(
+		mapping[1],
+		mapping[2],
+		mapping[3],
+		vim.tbl_extend("force", { noremap = true, silent = true }, mapping[4] or {})
+	)
+end
