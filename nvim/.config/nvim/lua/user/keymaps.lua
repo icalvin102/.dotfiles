@@ -7,11 +7,12 @@ local function switch_window(direction)
 end
 
 local mappings = {
-  -- Window Navigation
+	-- Window Navigation
 	{ { "n", "i", "t" }, "<A-h>", switch_window("h"), { desc = "Switch window left" } },
 	{ { "n", "i", "t" }, "<A-j>", switch_window("j"), { desc = "Switch window down" } },
 	{ { "n", "i", "t" }, "<A-k>", switch_window("k"), { desc = "Switch window up" } },
 	{ { "n", "i", "t" }, "<A-l>", switch_window("l"), { desc = "Switch window right" } },
+	{ { "n", "i", "t" }, "<A-p>", switch_window("p"), { desc = "Switch to previous window" } },
 }
 
 for _, mapping in ipairs(mappings) do

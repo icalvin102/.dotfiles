@@ -15,6 +15,15 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- plugins to look into
+-- https://github.com/nvim-telescope/telescope-project.nvim
+-- https://github.com/mfussenegger/nvim-dap
+-- https://github.com/rcarriga/nvim-dap-ui
+-- https://github.com/mikavilpas/yazi.nvim
+-- https://github.com/nvim-lua/plenary.nvim
+-- https://github.com/kndndrj/nvim-dbee
+-- https://github.com/rmagatti/auto-session
+
 local plugins = {
 	-- LSP
 	{
