@@ -37,7 +37,7 @@ local plugins = {
 		config = require("user.lsp"),
 	},
 	{
-		"zeioth/none-ls-autoload.nvim",
+	"zeioth/none-ls-autoload.nvim",
 		event = "BufEnter",
 		dependencies = {
 			"williamboman/mason.nvim",

@@ -4,22 +4,16 @@ return function()
 
 	-- Include the servers you want to have installed by default below
 	local servers = {
-		cssls = {},
-		eslint = {},
-		graphql = {},
-		html = {},
-		jsonls = {},
-		rust_analyzer = {},
-		svelte = {},
-		tailwindcss = {},
-		ts_ls = {},
-		lua_ls = {
-			Lua = {
-				diagnostics = {
-					globals = { "vim" },
-				},
-			},
-		},
+		"cssls",
+		"eslint",
+		"graphql",
+		"html",
+		"jsonls",
+		"rust_analyzer",
+		"svelte",
+		"tailwindcss",
+		"ts_ls",
+		"lua_ls",
 	}
 
 	local function format()
@@ -78,21 +72,26 @@ return function()
 	mason.setup({})
 
 	mason_lspconfig.setup({
-		ensure_installed = vim.tbl_keys(servers),
+		ensure_installed = servers,
 	})
 
 	local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-	mason_lspconfig.setup_handlers({
-		function(server_name)
-			require("lspconfig")[server_name].setup({
-				capabilities = capabilities,
-				on_attach = on_attach,
-				settings = servers[server_name] or {},
-				flags = {
-					debounce_text_changes = 150,
-				},
-			})
-		end,
-	})
+	vim.lsp.config("*", {
+    capabilities = capabilities,
+    on_attach = on_attach,
+    flags = {
+      debounce_text_changes = 150,
+    },
+  })
+
+  vim.lsp.config("lua_ls", {
+    settings = {
+      Lua = {
+        diagnostics = {
+          globals = { "vim" },
+        },
+      },
+    },
+  })
 end
