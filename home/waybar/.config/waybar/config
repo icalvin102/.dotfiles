@@ -1,0 +1,122 @@
+{
+  "layer": "top",
+  "modules-left": [
+    "hyprland/workspaces",
+    "hyprland/window"
+  ],
+  "modules-right": [
+    "custom/arrow-left",
+    "battery",
+    "custom/arrow-left",
+    "network",
+    "custom/arrow-left",
+    "pulseaudio",
+    "custom/arrow-left",
+    "backlight",
+    "custom/arrow-left",
+    "clock#date",
+    "custom/arrow-left",
+    "clock#time"
+  ],
+  "backlight": {
+    "format": "{percent}% {icon}",
+    "format-icons": [
+      "",
+      ""
+    ]
+  },
+  "battery": {
+    "interval": 10,
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format-time": "{H}:{M:02}",
+    "format": "{icon} {capacity}%",
+    "format-charging": " {capacity}%",
+    "format-charging-full": " {capacity}%",
+    "format-full": "{icon} {capacity}%",
+    "format-alt": "{icon} {power}W",
+    "format-icons": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "tooltip": false
+  },
+  "clock#time": {
+    "interval": 10,
+    "format": "{:%H:%M}",
+    "tooltip": false
+  },
+  "clock#date": {
+    "interval": 20,
+    "format": "{:%e %b %Y}",
+    "format-alt": "{:%Y-%m-%d}",
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "calendar": {
+      "format": {
+        "days": "<span color='#ecc6d9'><b>{}</b></span>",
+        "months": "<span color='#ffead3'><b>{}</b></span>",
+        "today": "<span color='#ff6699'><b><u>{}</u></b></span>",
+        "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+        "weeks": "<span color='#99ffdd'><b>W{}</b></span>"
+      },
+      "mode": "month",
+      "on-scroll": 1,
+      "weeks-pos": "left"
+    }
+  },
+  "hyprland/workspaces": {
+   "format": "{icon} {windows}",
+    "format-window-separator": " ",
+    "window-rewrite": {
+      "brave": "󰇧",
+      "thunar": "",
+      "telegram": "",
+      "wezterm": ""
+    },
+    "window-rewrite-default": ""
+  },
+  "network": {
+    "interval": 5,
+    "format-wifi": " {essid} ({signalStrength}%)",
+    "format-ethernet": " {ifname}",
+    "format-disconnected": "No connection",
+    "format-alt": " {ipaddr}/{cidr}",
+    "tooltip": false
+  },
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-bluetooth": "{icon} {volume}%",
+    "format-muted": "",
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": [
+        "",
+        ""
+      ]
+    },
+    "scroll-step": 1,
+    "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+    "tooltip": false
+  },
+  "tray": {
+    "icon-size": 18
+  },
+  "custom/arrow-left": {
+    "format": "",
+    "tooltip": false
+  },
+  "custom/arrow-right": {
+    "format": "",
+    "tooltip": false
+  }
+}

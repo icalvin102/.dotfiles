@@ -43,3 +43,21 @@ alias bl='~/build/blender-git/build_linux/bin/blender'
 [ -f /usr/share/fzf/key-bindings.bash ] && source /usr/share/fzf/key-bindings.bash
 
 [ -f ~/.bashrc_local ] && source ~/.bashrc_local
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# yazi
+function y() {
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+    yazi "$@" --cwd-file="$tmp"
+    if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+        builtin cd -- "$cwd"
+    fi
+    rm -f -- "$tmp"
+}
+
+# espidf
+export IDF_PATH=$HOME/esp/esp-idf
+alias get_idf='. $IDF_PATH/export.sh'

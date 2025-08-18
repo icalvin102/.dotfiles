@@ -1,0 +1,282 @@
+/* Keyframes */
+
+@keyframes blink-critical {
+	to {
+		/*color: @white;*/
+		background-color: @critical;
+	}
+}
+
+
+/* Styles */
+
+/* Colors (gruvbox) */
+@define-color black	#282828;
+@define-color red	#cc241d;
+@define-color green	#98971a;
+@define-color yellow	#d79921;
+@define-color blue	#458588;
+@define-color purple	#b16286;
+@define-color aqua	#689d6a;
+@define-color gray	#a89984;
+@define-color brgray	#928374;
+@define-color brred	#fb4934;
+@define-color brgreen	#b8bb26;
+@define-color bryellow	#fabd2f;
+@define-color brblue	#83a598;
+@define-color brpurple	#d3869b;
+@define-color braqua	#8ec07c;
+@define-color white	#ebdbb2;
+@define-color bg2	#504945;
+
+
+@define-color warning 	@bryellow;
+@define-color critical	@red;
+@define-color mode	@black;
+@define-color unfocused	@bg2;
+@define-color focused	@braqua;
+@define-color inactive	@purple;
+@define-color sound	@brpurple;
+@define-color network	@purple;
+@define-color memory	@braqua;
+@define-color cpu	@green;
+@define-color temp	@brgreen;
+@define-color layout	@bryellow;
+@define-color battery	@aqua;
+@define-color date	@black;
+@define-color time	@white;
+
+@define-color fg_color_1 @black;
+@define-color fg_color_2 @white;
+@define-color fg_color_3 @black;
+@define-color fg_color_4 @white;
+@define-color fg_color_5 @black;
+@define-color fg_color_6 @black;
+@define-color fg_color_7 @black;
+@define-color fg_color_8 @white;
+@define-color fg_color_9 @black;
+
+@define-color bg_color_1 @brpurple;
+@define-color bg_color_2 @purple;
+@define-color bg_color_3 @braqua;
+@define-color bg_color_4 @green;
+@define-color bg_color_5 @brgreen;
+@define-color bg_color_6 @bryellow;
+@define-color bg_color_7 @aqua;
+@define-color bg_color_8 @black;
+@define-color bg_color_9 @white;
+
+
+/* Reset all styles */
+* {
+	border: none;
+	border-radius: 0;
+	min-height: 0;
+	margin: 0;
+	padding: 0;
+	box-shadow: none;
+	text-shadow: none;
+	-gtk-icon-shadow: none;
+}
+
+/* The whole bar */
+#waybar {
+	background: rgba(40, 40, 40, 0.8784313725); /* #282828e0 */
+	color: @white;
+	font-family: JetBrains Mono, Siji, Hack Nerd Font;
+	font-size: 10pt;
+	/*font-weight: bold;*/
+}
+
+/* Each module */
+#battery,
+#clock,
+#cpu,
+#language,
+#memory,
+#mode,
+#network,
+#pulseaudio,
+#temperature,
+#tray,
+#backlight,
+#idle_inhibitor,
+#disk,
+#user,
+#mpris {
+	padding-left: 8pt;
+	padding-right: 8pt;
+}
+
+/* Each critical module */
+#mode,
+#memory.critical,
+#cpu.critical,
+#temperature.critical,
+#battery.critical.discharging {
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+	animation-name: blink-critical;
+	animation-duration: 1s;
+}
+
+/* Each warning */
+#network.disconnected,
+#memory.warning,
+#cpu.warning,
+#temperature.warning,
+#battery.warning.discharging {
+	color: @warning;
+}
+
+/* And now modules themselves in their respective order */
+
+/* Current sway mode (resize etc) */
+#mode {
+	color: @white;
+	background: @mode;
+}
+
+/* Workspaces stuff */
+#workspaces button {
+	/*font-weight: bold;*/
+	padding-left: 4pt;
+	padding-right: 9pt;
+	color: @white;
+	background: @unfocused;
+}
+
+/* Inactive (on unfocused output) */
+#workspaces button.visible {
+	color: @white;
+	background: @inactive;
+}
+
+/* Active (on focused output) */
+#workspaces button.focused {
+	color: @black;
+	background: @focused;
+}
+
+/* Contains an urgent window */
+#workspaces button.urgent {
+	color: @black;
+	background: @warning;
+}
+
+/* Style when cursor is on the button */
+#workspaces button:hover {
+	background: @black;
+	color: @white;
+}
+
+#window {
+	margin-right: 35pt;
+	margin-left: 35pt;
+}
+
+#custom-arrow-left {
+	font-size: 11pt;
+}
+
+#custom-arrow-right {
+	font-size: 11pt;
+  color: @unfocused;
+  background: transparent;
+}
+
+/* Right side modules */
+
+.modules-right > widget:nth-child(1) > label#custom-arrow-left {
+  background: transparent;
+}
+
+.modules-right > widget:nth-last-child(18) > label {
+  color: @bg_color_1;
+  background: transparent;
+}
+
+.modules-right > widget:nth-last-child(17) > label {
+    color: @fg_color_1;
+    background: @bg_color_1;
+}
+
+.modules-right > widget:nth-last-child(16) > label {
+  color: @bg_color_2;
+  background: @bg_color_1;
+}
+
+.modules-right > widget:nth-last-child(15) > label {
+    color: @fg_color_2;
+    background: @bg_color_2;
+}
+
+.modules-right > widget:nth-last-child(14) > label {
+  color: @bg_color_3;
+  background: @bg_color_2;
+}
+
+.modules-right > widget:nth-last-child(13) > label {
+    color: @fg_color_3;
+    background: @bg_color_3;
+}
+.modules-right > widget:nth-last-child(12) > label {
+  color: @bg_color_4;
+  background: @bg_color_3;
+}
+
+.modules-right > widget:nth-last-child(11) > label {
+    color: @fg_color_4;
+    background: @bg_color_4;
+}
+
+.modules-right > widget:nth-last-child(10) > label {
+  color: @bg_color_5;
+  background: @bg_color_4;
+}
+
+.modules-right > widget:nth-last-child(9) > label {
+    color: @fg_color_5;
+    background: @bg_color_5;
+}
+
+.modules-right > widget:nth-last-child(8) > label {
+  color: @bg_color_6;
+  background: @bg_color_5;
+}
+
+.modules-right > widget:nth-last-child(7) > label {
+    color: @fg_color_6;
+    background: @bg_color_6;
+}
+
+.modules-right > widget:nth-last-child(6) > label {
+  color: @bg_color_7;
+  background: @bg_color_6;
+}
+
+.modules-right > widget:nth-last-child(5) > label {
+    color: @fg_color_7;
+    background: @bg_color_7;
+}
+
+.modules-right > widget:nth-last-child(4) > label {
+  color: @bg_color_8;
+  background: @bg_color_7;
+}
+
+.modules-right > widget:nth-last-child(3) > label {
+    color: @fg_color_8;
+    background: @bg_color_8;
+}
+
+.modules-right > widget:nth-last-child(2) > label {
+  color: @bg_color_9;
+  background: @bg_color_8;
+}
+
+.modules-right > widget:nth-last-child(1) > label {
+    color: @fg_color_9;
+    background: @bg_color_9;
+}
