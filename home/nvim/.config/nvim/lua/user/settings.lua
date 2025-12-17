@@ -22,6 +22,14 @@ vim.opt.listchars.tab = "▸ "
 vim.opt.listchars.eol = "¬"
 vim.o.list = true
 
+vim.diagnostic.config({
+  virtual_text = {
+    current_line = false
+  }
+})
+
+vim.keymap.set("n", "<leader>cc", ":e ~/.config/nvim<cr>", { noremap = true, silent = true, desc = "Edit NeoVim Config" })
+
 function set_quickfix_from_svelte_check()
 	local command = "npm run check -- --output machine | awk '/ WARNING | ERROR / {print $0}'"
 	-- Run the command and get the output

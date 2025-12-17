@@ -37,7 +37,7 @@ local plugins = {
 		config = require("user.lsp"),
 	},
 	{
-	"zeioth/none-ls-autoload.nvim",
+		"zeioth/none-ls-autoload.nvim",
 		event = "BufEnter",
 		dependencies = {
 			"williamboman/mason.nvim",
@@ -47,6 +47,17 @@ local plugins = {
 			},
 		},
 		opts = {},
+	},
+	{
+		"folke/lazydev.nvim",
+		ft = "lua", -- only load on lua files
+		opts = {
+			library = {
+				-- See the configuration section for more details
+				-- Load luvit types when the `vim.uv` word is found
+				{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
+			},
+		},
 	},
 
 	-- Completion
@@ -183,6 +194,7 @@ local plugins = {
 	},
 	{
 		"sindrets/diffview.nvim",
+    lazy = false,
 		dependencies = {
 			"nvim-tree/nvim-web-devicons",
 		},

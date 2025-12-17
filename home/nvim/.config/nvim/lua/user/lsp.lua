@@ -37,36 +37,39 @@ return function()
 		end
 	end
 
-	local on_attach = function(_, bufnr)
-		-- Enable completion triggered by <c-x><c-o>
-		vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+	local aug = vim.api.nvim_create_augroup("UserLspKeymaps", { clear = true })
 
-		-- Mappings.
-		local tb = require("telescope.builtin")
+	vim.api.nvim_create_autocmd("LspAttach", {
+		group = aug,
+		callback = function(ev)
+			-- ev.buf is the buffer number
+			-- ev.data.client_id is the LSP client id (if you need the client)
+			-- local client = vim.lsp.get_client_by_id(ev.data.client_id)
 
-		local function mk_opts(desc)
-			return { noremap = true, silent = true, buffer = bufnr, desc = desc }
-		end
+			local tb = require("telescope.builtin")
 
-		-- See `:help vim.lsp.*` for documentation on any of the below functions
-		vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, mk_opts("Signature Help"))
-		vim.keymap.set("n", "<leader>D", tb.lsp_type_definitions, mk_opts("Type [D]efinition"))
-		vim.keymap.set("n", "<leader>ds", tb.lsp_document_symbols, mk_opts("[D]ocument [S]ymbols"))
-		vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, mk_opts("Show [E]rror"))
-		vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, mk_opts("Open Diagnostics List"))
-		vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, mk_opts("[R]e[n]ame"))
-		vim.keymap.set("n", "<leader>ws", tb.lsp_dynamic_workspace_symbols, mk_opts("[W]orkspace [S]ymbols"))
-		vim.keymap.set("n", "K", vim.lsp.buf.hover, mk_opts("Hover Documentation"))
-		vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, mk_opts("Go to Previous Diagnostic"))
-		vim.keymap.set("n", "]d", vim.diagnostic.goto_next, mk_opts("Go to Next Diagnostic"))
-		vim.keymap.set("n", "gD", vim.lsp.buf.declaration, mk_opts("[G]oto [D]eclaration"))
-		vim.keymap.set("n", "gI", tb.lsp_implementations, mk_opts("[G]oto [I]mplementation"))
-		vim.keymap.set("n", "gd", tb.lsp_definitions, mk_opts("[G]oto [D]efinition"))
-		vim.keymap.set("n", "gr", tb.lsp_references, mk_opts("[G]oto [R]eferences"))
-		vim.keymap.set("v", "<leader>f", format, mk_opts("[F]ormat Selection"))
-		vim.keymap.set({ "n", "v", "x" }, "<leader>ca", vim.lsp.buf.code_action, mk_opts("[C]ode [A]ction"))
-		vim.keymap.set({ "n", "v" }, "<leader>f", format, mk_opts("[F]ormat"))
-	end
+			local function mk_opts(desc)
+				return { noremap = true, silent = true, buffer = ev.buf, desc = desc }
+			end
+
+			-- Keymaps (buffer-local)
+			vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, mk_opts("Signature Help"))
+			vim.keymap.set("n", "<leader>D", tb.lsp_type_definitions, mk_opts("Type [D]efinition"))
+			vim.keymap.set("n", "<leader>ds", tb.lsp_document_symbols, mk_opts("[D]ocument [S]ymbols"))
+			vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, mk_opts("Show [E]rror"))
+			vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, mk_opts("Open Diagnostics List"))
+			vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, mk_opts("[R]e[n]ame"))
+			vim.keymap.set("n", "<leader>ws", tb.lsp_dynamic_workspace_symbols, mk_opts("[W]orkspace [S]ymbols"))
+			vim.keymap.set("n", "K", vim.lsp.buf.hover, mk_opts("Hover Documentation"))
+			vim.keymap.set("n", "gD", vim.lsp.buf.declaration, mk_opts("[G]oto [D]eclaration"))
+			vim.keymap.set("n", "gI", tb.lsp_implementations, mk_opts("[G]oto [I]mplementation"))
+			vim.keymap.set("n", "gd", tb.lsp_definitions, mk_opts("[G]oto [D]efinition"))
+			vim.keymap.set("n", "gr", tb.lsp_references, mk_opts("[G]oto [R]eferences"))
+			vim.keymap.set("v", "<leader>f", format, mk_opts("[F]ormat Selection"))
+			vim.keymap.set({ "n", "v", "x" }, "<leader>ca", vim.lsp.buf.code_action, mk_opts("[C]ode [A]ction"))
+			vim.keymap.set({ "n", "v" }, "<leader>f", format, mk_opts("[F]ormat"))
+		end,
+	})
 
 	-- Setup
 	mason.setup({})
@@ -78,20 +81,19 @@ return function()
 	local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 	vim.lsp.config("*", {
-    capabilities = capabilities,
-    on_attach = on_attach,
-    flags = {
-      debounce_text_changes = 150,
-    },
-  })
+		capabilities = capabilities,
+		flags = {
+			debounce_text_changes = 150,
+		},
+	})
 
-  vim.lsp.config("lua_ls", {
-    settings = {
-      Lua = {
-        diagnostics = {
-          globals = { "vim" },
-        },
-      },
-    },
-  })
+	vim.lsp.config("lua_ls", {
+		settings = {
+			Lua = {
+				diagnostics = {
+					globals = { "vim" },
+				},
+			},
+		},
+	})
 end
