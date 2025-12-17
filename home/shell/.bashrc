@@ -48,6 +48,9 @@ alias bl='~/build/blender-git/build_linux/bin/blender'
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
+# npm
+export PATH=$HOME/.npm-global/bin:$PATH
+
 # yazi
 function y() {
     local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
